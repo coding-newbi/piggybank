@@ -1,0 +1,177 @@
+
+
+
+
+
+<!-- form_template.html -->
+<form method="post" id="customer-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="submit" value="Submit">
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Change event handler for the district dropdown
+    $("#id_district").change(function() {
+        var district_id = $(this).val();
+        $.ajax({
+            url: '{% url "load_branch" %}',  // Use the URL pattern name from your urls.py
+            data: { district_id: district_id },
+            dataType: 'json',
+            method: 'get',
+            success: function(data) {
+                var branchSelect = $("#id_branch");
+                branchSelect.empty();
+                $.each(data.branches, function(index, branch) {
+                    branchSelect.append($('<option>', {
+                        value: branch.id,
+                        text: branch.name
+                    }));
+                });
+            }
+        });
+    });
+});
+</script>
+
+
+
+<!DOCTYPE html>
+{% extends 'base.html'%}
+{% block template %}
+{% include 'navbar.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>reg</title>
+     {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- form_template.html -->
+<form method="post" id="customer-form">
+    {% csrf_token %}
+
+    <p class="form-field">
+  <label for="{{ form.NAME.id_for_label }}">Name:</label>
+  {{ form.NAME }}
+</p>
+
+ <p class="form-field">
+  <label for="{{ form.AGE.id_for_label }}">AGE:</label>
+  {{ form.AGE }}
+</p>
+    <p class="form-field" >
+  <label for="{{ form.DATE_OF_BIRTH.id_for_label }}">DATE OF BIRTH:</label>
+  {{ form.DATE_OF_BIRTH }}
+</p>
+     <p class="scroll-container ">
+  <label for="{{ form.GENDER.id_for_label }}">GENDER:</label>
+  {{ form.GENDER }}
+</p>
+      <p class="form-field">
+  <label for="{{ form.MAIL_ID.id_for_label }}">MAIL ID :</label>
+  {{ form.MAIL_ID  }}
+</p>
+
+      <p class="form-field">
+  <label for="{{ form.PHONE_NUMBER.id_for_label }}">PHONE NUMBER :</label>
+  {{ form.PHONE_NUMBER }}
+</p>
+        <p class="form-field">
+  <label for="{{ form.ADDRESS.id_for_label }}">ADDRESS :</label>
+  {{ form.ADDRESS }}
+</p>
+    <p class="form-field ">
+  <label for="{{ form.district.id_for_label }}">DISTRICT :</label>
+  {{ form.district  }}
+</p>
+    <p class="form-field">
+  <label for="{{ form.branch.id_for_label }}">BRANCH :</label>
+  {{ form.branch }}
+</p>
+    <p class="form-field">
+  <label for="{{ form.ACCOUNT_TYPE.id_for_label }}">ACCOUNT TYPE:</label>
+  {{ form.ACCOUNT_TYPE }}
+</p>
+ <p class="form-field">
+  <label for="{{ form.MATERIALS_PROVIDED.id_for_label }}">MATERIALS PROVIDED:</label>
+  {{ form.MATERIALS_PROVIDED }}
+</p>
+
+
+
+
+    <input type="submit" value="Submit">
+</form>
+</body>
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Change event handler for the district dropdown
+    $("#id_district").change(function() {
+        var district_id = $(this).val();
+        $.ajax({
+            url: '{% url "load_branch" %}',  // Use the URL pattern name from your urls.py
+            data: { district_id: district_id },
+            dataType: 'json',
+            method: 'get',
+            success: function(data) {
+                var branchSelect = $("#id_branch");
+                branchSelect.empty();
+                $.each(data.branches, function(index, branch) {
+                    branchSelect.append($('<option>', {
+                        value: branch.id,
+                        text: branch.name
+                    }));
+                });
+            }
+        });
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

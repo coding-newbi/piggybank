@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<form  method="post" >
+    {% csrf_token %}
+<head>
+    <meta charset="UTF-8">
+    <title>about</title>
+    <style>{% load static %}
+     body {
+            background-image: url("{% static 'images/piggybank3.jpg' %}");
+            background-size: cover;
+        }</style>
+</head>
+<body><br><br>
+<h1 >welcome to piggy bank</h1>
+{% if user.is_authenticated %}
+                                  <h2> Hello...{{user.username}}. </h2>
+                                  <h3>For more assistance ...create an account with us.</h3>
+
+
+									{% endif %}
+
+<p>still don't have any account?<a href="{% url 'form' %}">Create an account</a></p>
+</body>
+    </form>
+</html>
+
+
+
+
+

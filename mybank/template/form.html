@@ -1,0 +1,132 @@
+{% extends 'base.html'%}
+{% block template %}
+{% include 'navbar.html' %}
+
+    <!-- Your form and content here -->
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>reg</title>
+     {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <h1 style="color: #FF6B6B;">FORM REGISTRATION</h1><br>
+     <style>
+        body {
+            background-image: url("{% static 'images/piggybank2.jpg' %}");
+            background-size: cover;
+        }
+    </style>
+</head>
+<body >
+
+<form method="post" id="customer-form">
+    {% csrf_token %}
+<div class="container">
+    <div class="row">
+            <div class="col-3" style="margin-bottom: 20px; padding-bottom: 20px;width:400px;">
+                <label for="{{ form.NAME.id_for_label }}">Name:</label>
+                {{ form.NAME }}
+            </div>
+
+
+             <div class="col-3" style="margin-bottom: 50px; padding-bottom: 20px;"  >
+                 <label for="{{ form.AGE.id_for_label }}">AGE:</label>
+                 {{ form.AGE }}
+             </div>
+
+             <div class="col-3" style="margin-bottom: 20px; padding-bottom: 20px;">
+                 <label for="{{ form.DATE_OF_BIRTH.id_for_label }}">DATE OF BIRTH:</label>
+                 {{ form.DATE_OF_BIRTH }}
+             </div>
+    </div>
+    <div class="row">
+
+             <div class="col-3" style="width:200px; margin-bottom: 20px;margin-bottom: 20px; padding-bottom: 20px;" >
+                  <label for="{{ form.GENDER.id_for_label }}">GENDER:</label>
+                  {{ form.GENDER }}
+             </div>
+
+             <div class="col-3" style="margin-bottom: 25px;width:400px;height:150px; padding-bottom: 25px;" >
+                  <label for="{{ form.MAIL_ID.id_for_label }}">MAIL ID :</label>
+                  {{ form.MAIL_ID  }}
+             </div>
+
+             <div class="col-3" style="margin-bottom: 20px; padding-bottom: 20px;" >
+                  <label for="{{ form.PHONE_NUMBER.id_for_label }}">PHONE NUMBER :</label>
+                  {{ form.PHONE_NUMBER }}
+             </div>
+    </div>
+    <div class="row" style="margin-bottom: 20px; padding-bottom: 20px;" >
+
+             <div class="col-4" style="margin-bottom: 20px; padding-bottom: 20px;">
+                  <label for="{{ form.ADDRESS.id_for_label }}">ADDRESS :</label>
+                  {{ form.ADDRESS }}
+             </div>
+
+             <div class="col-4" style="width:250px;margin-bottom: 20px; padding-bottom: 20px;">
+                  <label for="{{ form.district.id_for_label }}">DISTRICT :</label>
+                  {{ form.district  }}
+             </div>
+
+             <div class="col-3" style="width:250px;margin-bottom: 20px; padding-bottom: 20px;">
+
+                  <label for="{{ form.branch.id_for_label }}">BRANCH :</label>
+                  {{ form.branch }}
+             </div>
+    </div>
+    <div class="row">
+
+             <div class="col-6" style="width:250px;margin-bottom: 20px; padding-bottom: 20px;">
+                  <label for="{{ form.ACCOUNT_TYPE.id_for_label }}">ACCOUNT TYPE:</label>
+                  {{ form.ACCOUNT_TYPE }}
+             </div>
+
+             <div class="col-6" style="margin-bottom: 20px; padding-bottom: 20px;" >
+                  <label for="{{ form.MATERIALS_PROVIDED.id_for_label }}">MATERIALS PROVIDED:</label>
+                  {{ form.MATERIALS_PROVIDED }}
+             </div>
+    </div>
+
+    <input class="btn btn-success my_custom_button" type="submit" value="Submit">
+
+     <a href="{% url 'logout' %}" class="btn btn-secondary my_custom_button">Logout</a>
+
+</div>
+</form>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Change event handler for the district dropdown
+    $("#id_district").change(function() {
+        var district_id = $(this).val();
+        $.ajax({
+            url: '{% url "load_branch" %}',  // Use the URL pattern name from your urls.py
+            data: { district_id: district_id },
+            dataType: 'json',
+            method: 'get',
+            success: function(data) {
+                var branchSelect = $("#id_branch");
+                branchSelect.empty();
+                $.each(data.branches, function(index, branch) {
+                    branchSelect.append($('<option>', {
+                        value: branch.id,
+                        text: branch.name
+                    }));
+                });
+            }
+        });
+    });
+});
+</script>
+
+</body>
+
+{% endblock %}

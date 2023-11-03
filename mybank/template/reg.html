@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends 'base.html'%}
+{% block template %}
+{% include 'navbar.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>reg</title>
+</head>
+<body>
+<form  method="post">
+    {% csrf_token %}
+    <h1 style="color: #FF6B6B;">REGISTRATION</h1>
+    <input type="text" name="username" placeholder="username"><br>
+    <input type="password" name="password" placeholder="password"><br>
+    <input type="password" name="cpassword" placeholder="confirm password"><br>
+    <input href="{% url 'login' %}" type="submit">
+
+</form>
+{% for msg in messages %}
+<h2 style="color:red">{{msg}}</h2>
+{% endfor %}
+
+</body>
+</html>
+{% endblock %}
